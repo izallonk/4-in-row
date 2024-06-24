@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj3t8apg8jage"]
+
+[ext_resource type="PackedScene" uid="uid://braxqpw0pe4oj" path="res://Board.tscn" id="1_6r2df"]
+[ext_resource type="Script" path="res://Root.gd" id="1_65yy7"]
+[ext_resource type="Script" path="res://Sprite/Cursor.gd" id="2_pm0xa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j78d8"]
+
+[node name="Root" type="Node2D"]
+script = ExtResource("1_65yy7")
+
+[node name="Board" parent="." instance=ExtResource("1_6r2df")]
+
+[node name="Cursor" type="Node2D" parent="."]
+script = ExtResource("2_pm0xa")
+
+[node name="Area2D" type="Area2D" parent="Cursor"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cursor/Area2D"]
+shape = SubResource("RectangleShape2D_j78d8")
+
+[connection signal="Place_at" from="Cursor" to="." method="_on_cursor_place_at"]
+[connection signal="area_entered" from="Cursor/Area2D" to="Cursor" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Cursor/Area2D" to="Cursor" method="_on_area_2d_area_exited"]

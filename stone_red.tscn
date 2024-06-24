@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://diajbkdoir540"]
+
+[ext_resource type="Texture2D" uid="uid://cwlon4te23mjl" path="res://Asset/RedLove.png" id="1_dfbfg"]
+[ext_resource type="Script" path="res://stone_red.gd" id="1_ymjwn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eynyj"]
+size = Vector2(32, 31)
+
+[node name="RedStone" type="Node2D"]
+script = ExtResource("1_ymjwn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_dfbfg")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_eynyj")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
