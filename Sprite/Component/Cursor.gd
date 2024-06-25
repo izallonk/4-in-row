@@ -1,15 +1,12 @@
 extends Node2D
 
-const red_stone_scene = preload("res://stone_red.tscn")
-
 signal Place_at (area)
 
 var area_list = []
 
 var stone:Node2D
 
-var red_stone = preload("res://stone_red.tscn")
-var blue_stone = preload("res://blue_stone.tscn")
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://diajbkdoir540"]
 
 [ext_resource type="Texture2D" uid="uid://cwlon4te23mjl" path="res://Asset/RedLove.png" id="1_dfbfg"]
-[ext_resource type="Script" path="res://stone_red.gd" id="1_ymjwn"]
+[ext_resource type="Script" path="res://Sprite/Component/stone_red.gd" id="1_ymjwn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eynyj"]
 size = Vector2(32, 31)

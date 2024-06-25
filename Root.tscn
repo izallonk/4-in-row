@@ -1,20 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://cj3t8apg8jage"]
+[gd_scene load_steps=5 format=3 uid="uid://cj3t8apg8jage"]
 
-[ext_resource type="PackedScene" uid="uid://braxqpw0pe4oj" path="res://Board.tscn" id="1_6r2df"]
 [ext_resource type="Script" path="res://Root.gd" id="1_65yy7"]
-[ext_resource type="Script" path="res://Sprite/Cursor.gd" id="2_pm0xa"]
-[ext_resource type="Script" path="res://Reset_Button.gd" id="4_schef"]
-[ext_resource type="Script" path="res://Winer_label.gd" id="5_s5w7u"]
+[ext_resource type="PackedScene" uid="uid://braxqpw0pe4oj" path="res://Scene/Board/Board.tscn" id="2_mu8yw"]
+[ext_resource type="Script" path="res://Sprite/Component/Cursor.gd" id="3_wqsjt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j78d8"]
 
 [node name="Root" type="Node2D"]
 script = ExtResource("1_65yy7")
 
-[node name="Board" parent="." instance=ExtResource("1_6r2df")]
+[node name="Board" parent="." instance=ExtResource("2_mu8yw")]
 
 [node name="Cursor" type="Node2D" parent="."]
-script = ExtResource("2_pm0xa")
+script = ExtResource("3_wqsjt")
 
 [node name="Area2D" type="Area2D" parent="Cursor"]
 
@@ -27,25 +25,23 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Reset_Button" type="Button" parent="UI"]
+[node name="VBoxContainer" type="HBoxContainer" parent="UI"]
 layout_mode = 0
-offset_left = 976.0
-offset_top = 30.0
-offset_right = 1027.0
-offset_bottom = 61.0
+offset_left = 1016.0
+offset_top = 32.0
+offset_right = 1113.0
+offset_bottom = 98.0
+
+[node name="Quit_Button" type="Button" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="Reset_Button" type="Button" parent="UI/VBoxContainer"]
+layout_mode = 2
 text = "Reset"
-script = ExtResource("4_schef")
 
-[node name="Win" type="Label" parent="UI"]
-layout_mode = 0
-offset_left = 98.0
-offset_top = 162.0
-offset_right = 138.0
-offset_bottom = 185.0
-script = ExtResource("5_s5w7u")
-
-[connection signal="winner_found" from="." to="UI/Win" method="_on_root_winner_found"]
 [connection signal="Place_at" from="Cursor" to="." method="_on_cursor_place_at"]
 [connection signal="area_entered" from="Cursor/Area2D" to="Cursor" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Cursor/Area2D" to="Cursor" method="_on_area_2d_area_exited"]
-[connection signal="pressed" from="UI/Reset_Button" to="UI/Reset_Button" method="_on_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/Quit_Button" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/Reset_Button" to="." method="_on_reset_button_pressed"]

@@ -1,7 +1,8 @@
 extends Node2D
 
-var red_stone_scene = preload("res://stone_red.tscn")
-var blue_stone_scene = preload("res://blue_stone.tscn")
+var red_stone_scene = preload("res://Scene/Component/stone_red.tscn")
+var blue_stone_scene = preload("res://Scene/Component/blue_stone.tscn")
+var win_scene = preload("res://Scene/UI/Win_scene.tscn")
 
 signal winner_found(stone)
 
@@ -22,7 +23,7 @@ var grid  = [0,0,0,0,0,0,0,0,0,
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	TheWinnerIs.the_winner_is = ""
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -49,8 +50,10 @@ func _on_cursor_place_at(area):
 		check_win_vertical()
 		check_win_diagonal_left()
 		check_win_diagonal_right()
-		
-
+	
+	if is_winner == true:
+		get_tree().change_scene_to_packed(win_scene)
+	
 
 func change_curent_stone():
 	if current_stone.name == "RedStone":
@@ -115,37 +118,46 @@ func check_win_horizontal():
 		for i in range(0,6):
 			if grid[9*j +i] == 2 && grid[9*j +i +1] == 2&& grid[9*j +i+2] == 2 && grid[9*j +i+3] == 2:
 				is_winner = true
-				winner_found.emit("Blue")
+				TheWinnerIs.the_winner_is = "Blue"
+				
 			if grid[9*j +i] == 1 && grid[9*j +i +1] == 1 && grid[9*j +i+2] == 1 && grid[9*j +i+3] == 1:
 				is_winner = true
-				winner_found.emit("Red")
+				TheWinnerIs.the_winner_is = "Red"
 
 func check_win_vertical():
 	for j in range(0, 9):
 		for i in range(0,6):
 			if grid[9*i +j] == 2 && grid[9*(i + 1) + j] == 2&& grid[9*(i + 2) + j] == 2 && grid[9*(i + 3) + j] == 2:
 				is_winner = true
-				winner_found.emit("Blue")
+				TheWinnerIs.the_winner_is = "Blue"
 			if grid[9*i +j] == 1 && grid[9*(i + 1) + j] == 1 && grid[9*(i + 2) + j] == 1 && grid[9*(i + 3) + j] == 1:
 				is_winner = true
-				winner_found.emit("Red")
+				TheWinnerIs.the_winner_is = "Red"
 
 func check_win_diagonal_left():
 	for j in range(0,6):
 		for i in range(0,6):
 			if grid[9*i +j] == 2 && grid[9*(i + 1) + (j+ 1)] == 2&& grid[9*(i + 2) + (j+ 2)] == 2 && grid[9*(i + 3) + (j+ 3)] == 2:
 				is_winner = true
-				winner_found.emit("Blue")
+				TheWinnerIs.the_winner_is = "Blue"
 			if grid[9*i +j] == 1 && grid[9*(i + 1) + (j+ 1)] == 1 && grid[9*(i + 2) + (j+ 2)] == 1 && grid[9*(i + 3) + (j+ 3)] == 1:
 				is_winner = true
-				winner_found.emit("Red")
+				TheWinnerIs.the_winner_is = "Red"
 
 func check_win_diagonal_right():
 	for j in range(0,6):
 		for i in range(3,9):
 			if grid[9*j + i] == 2 && grid[9*(j + 1) + (i - 1)] == 2&& grid[9*(j + 2) + (i - 2)] == 2 && grid[9*(j + 3) + (i - 3)] == 2:
 				is_winner = true
-				winner_found.emit("Blue")
+				TheWinnerIs.the_winner_is = "Blue"
 			if grid[9*j + i] == 1 && grid[9*(j + 1) + (i - 1)] == 1 && grid[9*(j + 2) + (i - 2)] == 1 && grid[9*(j + 3) + (i - 3)] == 1:
 				is_winner = true
-				winner_found.emit("Red")
+				TheWinnerIs.the_winner_is = "Red"
+
+
+func _on_quit_button_pressed():
+	get_tree().quit()
+
+
+func _on_reset_button_pressed():
+	get_tree().reload_current_scene()
