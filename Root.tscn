@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cj3t8apg8jage"]
+[gd_scene load_steps=7 format=3 uid="uid://cj3t8apg8jage"]
 
 [ext_resource type="PackedScene" uid="uid://braxqpw0pe4oj" path="res://Board.tscn" id="1_6r2df"]
 [ext_resource type="Script" path="res://Root.gd" id="1_65yy7"]
 [ext_resource type="Script" path="res://Sprite/Cursor.gd" id="2_pm0xa"]
+[ext_resource type="Script" path="res://Reset_Button.gd" id="4_schef"]
+[ext_resource type="Script" path="res://Winer_label.gd" id="5_s5w7u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j78d8"]
 
@@ -19,6 +21,31 @@ script = ExtResource("2_pm0xa")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cursor/Area2D"]
 shape = SubResource("RectangleShape2D_j78d8")
 
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Reset_Button" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 976.0
+offset_top = 30.0
+offset_right = 1027.0
+offset_bottom = 61.0
+text = "Reset"
+script = ExtResource("4_schef")
+
+[node name="Win" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 162.0
+offset_right = 138.0
+offset_bottom = 185.0
+script = ExtResource("5_s5w7u")
+
+[connection signal="winner_found" from="." to="UI/Win" method="_on_root_winner_found"]
 [connection signal="Place_at" from="Cursor" to="." method="_on_cursor_place_at"]
 [connection signal="area_entered" from="Cursor/Area2D" to="Cursor" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Cursor/Area2D" to="Cursor" method="_on_area_2d_area_exited"]
+[connection signal="pressed" from="UI/Reset_Button" to="UI/Reset_Button" method="_on_pressed"]
